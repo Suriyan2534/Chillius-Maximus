@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chillius Maximus</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <style>
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes matrix {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 15px #0f0; }
+            100% { box-shadow: 0 0 10px #0f0, 0 0 20px #0f0, 0 0 30px #0f0; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(45deg, #000000, #1a1a1a, #002000);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.1;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 255, 0, 0.2) 0%,
+                rgba(0, 255, 0, 0.2) 50%,
+                transparent 50%,
+                transparent 100%
+            );
+            background-size: 4px 4px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            background: rgba(36, 36, 36, 0.9);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .logo-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            background-color: #2d2d2d;
+            border: 2px solid #0f0;
+            animation: glow 2s ease-in-out infinite alternate;
+            object-fit: cover;
+        }
+
+        .section {
+            background: rgba(36, 36, 36, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateZ(20px);
+            border-color: #0f0;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .platform-item {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .platform-item:hover {
+            transform: translateY(-5px);
+            border-color: #0f0;
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+        }
+
+        .platform-icon {
+            font-size: 2em;
+            color: #0f0;
+            margin-bottom: 10px;
+        }
+
+        .platform-name {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .platform-status {
+            font-size: 0.8em;
+            color: #0f0;
+            margin-top: 5px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #363636, #1a1a1a);
+            color: #0f0;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            margin: 8px 0;
+            width: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #1a1a1a, #363636);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+            border-color: #0f0;
+        }
+
+        .claim-box {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            margin: 16px 0;
+            border: 1px solid #0f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .claim-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(0, 255, 0, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0f0;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .roadmap {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 16px 0;
+            border: 1px solid #0f0;
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0, 255, 0, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .roadmap-item:hover {
+            transform: translateX(10px);
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .roadmap-status {
+            width: 30px;
+            height: 30px;
+            margin-right: 15px;
+            border: 2px solid #0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #0f0;
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .roadmap-item.completed .roadmap-status {
+            background: rgba(0, 255, 0, 0.3);
+        }
+
+        .phase-header {
+            color: #0f0;
+            border-bottom: 1px solid #0f0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phase-indicator {
+            font-size: 12px;
+            padding: 4px 8px;
+            background: rgba(0, 255, 0, 0.2);
+            border-radius: 4px;
+            border: 1px solid #0f0;
+        }
+
+        .description {
+            text-align: center;
+            line-height: 1.8;
+            margin: 24px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            animation: float 7s ease-in-out infinite;
+        }
+
+        h1, h2, h3 {
+            color: #0f0;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+          <video width="50" height="50" autoplay loop muted class="profile-img">
+  <source src="https://www.dropbox.com/scl/fi/w2xd4e2nb8sl9usj70xzd/VID_20241124_215125_392.mp4?rlkey=57zqebaiiuurdups1vxzj3sab&st=b190wagq&raw=1" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+            </div>
+            <h1>Chillius Maximus</h1>
+        </div>
+
+        <div class="section">
+            <h2>Platforms & Status</h2>
+            <div class="platform-grid">
+                <div class="platform-item">
+                    <i class="fab fa-telegram platform-icon"></i>
+                    <div class="platform-name">Telegram</div>
+                    <div class="platform-status">✓ Active</div>
+                </div>
+                <div class="platform-item">
+                    <i class="fas fa-globe platform-icon"></i>
+                    <div class="platform-name">Website</div>
+                    <div class="platform-status">✓ Live</div>
+                </div>
+                <div class="platform-item">
+                    <i class="fab fa-twitter platform-icon"></i>
+                    <div class="platform-name">Twitter</div>
+                    <div class="platform-status">Coming Soon</div>
+                </div>
+                <div class="platform-item">
+                    <i class="fas fa-chart-line platform-icon"></i>
+                    <div class="platform-name">DexScreener</div>
+                    <div class="platform-status">Pending</div>
+                </div>
+                <div class="platform-item">
+                    <i class="fas fa-exchange-alt platform-icon"></i>
+                    <div class="platform-name">DexTools</div>
+                    <div class="platform-status">Pending</div>
+                </div>
+                <div class="platform-item">
+                    <i class="fas fa-building-columns platform-icon"></i>
+                    <div class="platform-name">CEX</div>
+                    <div class="platform-status">Phase 2</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Community Takeover</h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value">24H</div>
+                    <div class="stat-label">NOV 2024</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">COMMUNITY</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">🚀</div>
+                    <div class="stat-label">LAUNCHED</div>
+                </div>
+            </div>
+
+            <div class="claim-box">
+                <h3>Community Claim</h3>
+                <p>A community claimed ownership for this token on Nov 24 2024</p>
+                <p>Dev rugged this diamond ticker, based team and community took over to send it <span class="rocket">🚀</span></p>
+            </div>
+
+            <a href="https://t.me/ChilliusMaximus" class="btn">
+                <i class="fab fa-telegram"></i> Join Telegram Community
+            </a>
+            
+            <a href="https://dexscreener.com/solana/3zAYPeBckUiXy1JkGFA4DiCbxWTrqb72iBgK24UyGtU5" class="btn">
+                <i class="fas fa-chart-line"></i> View on DexScreener
+            </a>
+        </div>
+
+        <div class="section">
+            <div class="phase-header">
+                <h2>Roadmap</h2>
+                <span class="phase-indicator">PHASE 1 ACTIVE</span>
+            </div>
+            
+            <div class="roadmap">
+                <div class="roadmap-item completed">
+                    <div class="roadmap-status">✓</div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-title">Community Formation</div>
+                        <div class="roadmap-description">Create Telegram group and build initial community base</div>
+                    </div>
+                </div>
+
+                <div class="roadmap-item completed">
+                    <div class="roadmap-status">✓</div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-title">Website Launch</div>
+                        <div class="roadmap-description">Deploy official website with project information</div>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-status">→</div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-title">Social Media Expansion</div>
+                        <div class="roadmap-description">Launch official Twitter account and social media presence</div>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-status">→</div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-title">DexScreener Listing</div>
+                        <div class="roadmap-description">Get listed and verified on DexScreener</div>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-status">→</div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-title">DexTools Listing</div>
+                        <div class="roadmap-description">Official listing and verification on DexTools</div>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-status">→</div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-title">CEX Listing Campaign</div>
+                        <div class="roadmap-description">Application and listing on major centralized exchanges</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+           <!-- Previous sections continue -->
+        <!-- Rest of the previous content remains unchanged -->
+    </div>
+</body>
+</html>
